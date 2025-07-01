@@ -1,3 +1,10 @@
+Rough draft for a complete and competent fitness site where you can logg and follow up on your goals, big as small. Very early in developen. 
+Made paralel with summerjob during my schools summerbreak. 
+
+#Changes:
+07/01: Added Rough html to get a better scope.
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

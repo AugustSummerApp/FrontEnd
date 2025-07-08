@@ -2,19 +2,22 @@ import { Outlet, Link } from "react-router-dom"
 
 function Layout() {
   return (
-    <div>
-      <header>
+    <div className="container">
+      <header className="Header">
         <nav>
           <Link to="/">Homepage</Link>
           <Link to="/Training">Training</Link>
+          <Link to="/Progress">Progress</Link>
+          <Link to="/Macros">Progress</Link>
         </nav>
       </header>
-      <main>
+      <main className="main">
         <Outlet />
       </main>
-      <footer>
-        © 2025 Super Duper Mega Fitness
-      </footer>
+      <div className="Footer">
+        <p>© 2025 Super Duper Mega Fitness</p>
+
+      </div>
     </div>  )
 }
 

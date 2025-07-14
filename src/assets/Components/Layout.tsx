@@ -8,7 +8,7 @@ function Layout() {
           <Link to="/">Homepage</Link>
           <Link to="/Training">Training</Link>
           <Link to="/Progress">Progress</Link>
-          <Link to="/Macros">Progress</Link>
+          <Link to="/Macros">Macros</Link>
         </nav>
       </header>
       <main className="main">

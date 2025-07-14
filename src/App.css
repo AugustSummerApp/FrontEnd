@@ -75,14 +75,63 @@ a:hover,a:active{
 }
 
 .main{
+    border:1px solid black;
+    height: 90svh;
+}
+.Traningpagemain{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    margin:1rem;
+}
+.Workoutformgroup{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    form{
+        display: flex;
+        flex-direction: column;
+        gap:1rem;
+    }
+}
+
+.Workoutinputgroup{
+    display: flex;
+    gap: .5rem;
+    align-self: center;
+    justify-content: center;
+
+}
+.setsinput{
+    width: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid black;
-    height: 90svh;
-
+    border:1px solid var(--clr-border);
+    border-radius: .6rem;
+    
 }
 
+.weightinput{
+    width: 3rem;
+}
+
+.Macros-main{
+    margin:1rem;
+}
+.Macros-form{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap:1rem;
+}
+
+.Current-macros-sum{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
 @media(width < 1200px)
 {
     .container{

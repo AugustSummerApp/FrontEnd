@@ -1,6 +1,6 @@
 
 export default function ProgressPage() {
   return (
-    <div>ProgressPage</div>
+    <div>BIG FAT GRAPHS SHOWING YOUR PROGRESS KING/QUEEN</div>
   )
 }

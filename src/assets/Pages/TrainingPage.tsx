@@ -87,6 +87,9 @@ function TrainingPage() {
 
         </form>
       </div>
+      <div className="workout-sum">
+        <h1>Here is a summary of your workouts </h1>
+      </div>
     </div>
   )
 }

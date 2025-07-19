@@ -6,7 +6,7 @@
     text-decoration: none;
     color:var(--clr-text-primary);
     font-weight:var(--font-regular);
-        font-family: "Quicksand", sans-serif;
+    font-family: "Quicksand", sans-serif;
 }
 :root{
     --clr-primary:#0a0903;
@@ -21,6 +21,7 @@
     --clr-graph-line:#fff4d5;
     --clr-graph-bg:#fff4d5;
     --clr-graph:#fff4d5;
+    --clr-bg:#ffffff;
 
     --font-biggest:48px;
     --font-bigger:36px;
@@ -36,6 +37,29 @@
     --font-SemiBold:600;
     --font-Bold:700;
 }
+
+ :root[data-theme="dark"] {
+    --clr-primary:#0a0903;
+    --clr-text-primary:#1E1E20;
+    --clr-text-second:#1C2346;
+    --clr-second:#ff5100;
+    --clr-dark:#ff8200;
+    --clr-light:#e4e4e4;
+    --clr-border:#ffc929;
+    --clr-border-secondary:#fff4d5;
+    --clr-btn:#fff4d5;
+    --clr-graph-line:#fff4d5;
+    --clr-graph-bg:#fff4d5;
+    --clr-graph:#fff4d5;
+    --clr-bg:#0a0903;
+
+    }
+
+
+.wrapper{
+    background: var(--clr-bg);
+}
+
 a:hover,a:active{
     color:var(--clr-second);
     transition: .6s;
@@ -79,11 +103,22 @@ a:hover,a:active{
     height: 90svh;
 }
 .Traningpagemain{
-    display: flex;
+    display: grid;
+    grid-template-columns: 45% 45%;
+    gap:1rem;
     align-items: start;
     justify-content: start;
     flex-direction: column;
     margin:1rem;
+    .Workoutformgroup{
+        grid-column: 1;
+        border: 1px solid black;
+    }
+    .workout-sum{
+        grid-column: 2;
+        border: 1px solid black;
+
+    }
 }
 .Workoutformgroup{
     display: flex;

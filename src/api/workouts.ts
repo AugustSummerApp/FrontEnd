@@ -1,19 +1,23 @@
-import { Workout } from '../types';
+import type { Workout } from '../types';
 
-const API_BASE = process.env.REACT_APP_API_URL ?? 'http://localhost:5118/api';
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:5118/api';
 
 export async function fetchWorkouts(): Promise<Workout[]> {
   const res = await fetch(`${API_BASE}/workouts`);
   if (!res.ok) throw new Error('Could not fetch workouts');
-  return res.json();
+  const data: Workout[] = await res.json();
+  return data;
 }
 
-export async function createWorkout(data: Omit<Workout, 'id'>): Promise<Workout> {
+export type WorkoutCreate = Omit<Workout, 'id'>;
+
+export async function createWorkout(data: WorkoutCreate): Promise<Workout> {
   const res = await fetch(`${API_BASE}/workouts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('could not create workout');
-  return res.json();
+  const created: Workout = await res.json();
+  return created;
 }

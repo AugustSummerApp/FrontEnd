@@ -18,6 +18,5 @@ export async function createWorkout(data: WorkoutCreate): Promise<Workout> {
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('could not create workout');
-  const created: Workout = await res.json();
-  return created;
+  return res.json();
 }

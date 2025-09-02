@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { EXERCISE_CATEGORIES, EQUIPMENT  } from "../../reference";
 import type { ChangeEvent, FormEvent, FC} from 'react';
 import type { Workout } from "../../types";
 import { fetchWorkouts, createWorkout } from "../../api/workouts";
@@ -14,6 +15,8 @@ const TrainingPage: FC = () => {
     equipment:'',
     weight:'',
   });
+  const [error,setError] = useState<string | null>(null);
+
   useEffect(() => {
     loadWorkouts();
   }, []);
@@ -24,15 +27,17 @@ const TrainingPage: FC = () => {
       setWorkouts(data);
     } catch (err) {
       console.error(err);
+       setError("Could not get workouts");
     }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
     setForm (f => ({...f,[name]: value}));
+    if (error) setError(null);
   };
 
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
   // Basic validation
@@ -44,21 +49,18 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   const reps = Number(form.reps);
   const weight = Number(form.weight);
 
-  if (!date || !name || !exerciseType || !equipment) {
-    console.error('You must enter all fields');
-    return;
-  }
-  if (!Number.isFinite(sets) || sets < 1 || sets > 30) {
-    console.error('Sets must be between 1-30');
-    return;
-  }
-  if (!Number.isFinite(reps) || reps < 1 || reps > 30) {
-    console.error('Reps must be between 1-30');
-    return;
-  }
-  if (!Number.isFinite(weight) || weight < 0) {
-    console.error('Weight must be a number');
-    return;
+  const errors: string[] = [];
+  if (!date) errors.push("You must pick a date")
+  if (!name) errors.push("Please name your workout")
+  if (!exerciseType) errors.push("Please choose an exercise")
+  if (!equipment) errors.push("Please choose an equipment")
+  if (!Number.isFinite(sets) || sets < 1 || sets > 30) errors.push("Sets must be between 1–30.");
+  if (!Number.isFinite(reps) || reps < 1 || reps > 30) errors.push("Reps must be between 1–30.");
+  if (!Number.isFinite(weight) || weight < 0) errors.push("Please enter excersie weight");
+
+  if (errors.length > 0) {
+  setError(errors.join(" "));
+  return;
   }
 
   const payload = { date, name, exerciseType, sets, reps, equipment, weight };
@@ -75,17 +77,20 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       equipment: '',
       weight: '',
     });
+    setError(null);
     await loadWorkouts();
   } catch (err) {
     console.error(err);
+    setError("Could not logg workout, something went wrong")
   }
-};
+  };
 
   return (
     <div className="Traningpagemain">TrainingPage
       <div className="Workoutformgroup">
-        <form className="Workoutform" onSubmit={handleSubmit}>
-          <div>
+        <form noValidate className="Workoutform" onSubmit={handleSubmit}>
+
+          <div className="form-group">
             <label htmlFor="date">Datum</label>
             <input
               id="date"
@@ -97,7 +102,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             />
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="name">Session Name</label>
             <input
               id="name"
@@ -110,28 +115,29 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             />
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="exerciseType">Exercise Type</label>
-            <input
+            <select
               id="exerciseType"
-              type="text"
               name="exerciseType"
               value={form.exerciseType}
               onChange={handleChange}
-              list="exercise-options" 
-              autoComplete="off"
               required
-            />
-            <datalist id="exercise-options">
-              <option value="Bench Press" />
-              <option value="Squat" />
-              <option value="Deadlift" />
-              <option value="Overhead Press" />
-              <option value="Row" />
-            </datalist>
+            >
+              <option value="" disabled>--|--</option>
+              {EXERCISE_CATEGORIES.map(cat => (
+                <optgroup key={cat.id} label={cat.title}>
+                  {cat.items.map(ex => (
+                    <option key={ex.id} value={ex.label}>
+                      {ex.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
           </div>
 
-          <div>
+          <div className="form-group-num">
             <label htmlFor="sets">Sets</label>
             <input
               id="sets"
@@ -147,7 +153,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             />
           </div>
 
-          <div>
+          <div className="form-group-num">
             <label htmlFor="reps">Reps</label>
             <input
               id="reps"
@@ -163,28 +169,25 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             />
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="equipment">Equipment</label>
-            <input
+            <select
               id="equipment"
-              type="text"
               name="equipment"
               value={form.equipment}
               onChange={handleChange}
-              list="equipment-options"
-              autoComplete="off"
               required
-            />
-            <datalist id="equipment-options">
-              <option value="Barbell" />
-              <option value="Dumbbells" />
-              <option value="Machine" />
-              <option value="Kettlebell" />
-              <option value="Bodyweight" />
-            </datalist>
+            >
+              <option value="">--|--</option>
+              {EQUIPMENT.map(eq => (
+                <option key={eq.id} value={eq.label}>
+                  {eq.label}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <div>
+          <div className="form-group">
             <label htmlFor="weight">Weight (kg)</label>
             <input
               id="weight"
@@ -200,11 +203,18 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
           </div>
 
           <button type="submit">Logg Session!</button>
+          
+          {error && (
+            <p className="form-error">
+               {error}
+             </p>
+          )}
+
         </form>
       </div>
       <div className="workout-sum">
         <h1>Here is a summary of your workouts </h1>
-        <ul>
+        <ul className="workout-sum-list">
           {workouts.map(w => (
             <li key={w.id}>
               {new Date(w.date).toLocaleDateString()} – {w.name} – {w.exerciseType}:

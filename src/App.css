@@ -11,19 +11,19 @@
     list-style: none;
 }
 :root{
-    --clr-primary:#0a0903;
-    --clr-text-primary:#1E1E20;
-    --clr-text-second:#1C2346;
-    --clr-second:#ff5100;
-    --clr-dark:#ff8200;
-    --clr-light:#e4e4e4;
-    --clr-border:#ffc929;
-    --clr-border-secondary:#fff4d5;
-    --clr-btn:#fff4d5;
-    --clr-graph-line:#fff4d5;
-    --clr-graph-bg:#fff4d5;
-    --clr-graph:#fff4d5;
-    --clr-bg:#ffffff;
+    --clr-primary:#ADADAD;
+    --clr-secondary:#F2EDEA;
+    --clr-border-primary:#383838;
+    --clr-border-secondary:#39A4AC;
+    --clr-bg:#121212;
+    --clr-bg-secondary:#1E1E1E;
+    --clr-font-header:#FE4E00;
+    --clr-font-primary:#DFDEDC;
+    --clr-font-secondary:#999999;
+    --clr-green:#A3DB78;
+    --clr-red:#FF8677;
+    
+
 
     --font-biggest:48px;
     --font-bigger:36px;
@@ -38,25 +38,36 @@
     --font-medium:500;
     --font-SemiBold:600;
     --font-Bold:700;
+
+    ----clr-err:#ff0f0f;
 }
 
  :root[data-theme="dark"] {
-    --clr-primary:#0a0903;
-    --clr-text-primary:#1E1E20;
-    --clr-text-second:#1C2346;
-    --clr-second:#ff5100;
-    --clr-dark:#ff8200;
-    --clr-light:#e4e4e4;
-    --clr-border:#ffc929;
-    --clr-border-secondary:#fff4d5;
-    --clr-btn:#fff4d5;
-    --clr-graph-line:#fff4d5;
-    --clr-graph-bg:#fff4d5;
-    --clr-graph:#fff4d5;
-    --clr-bg:#0a0903;
-
-    }
-
+    --clr-primary:#ADADAD;
+    --clr-secondary:#F2EDEA;
+    --clr-border-primary:#383838;
+    --clr-border-secondary:#39A4AC;
+    --clr-bg:#121212;
+    --clr-bg-secondary:#1E1E1E;
+    --clr-font-header:#FE4E00;
+    --clr-font-primary:#DFDEDC;
+    --clr-font-secondary:#999999;
+    --clr-green:#A3DB78;
+    --clr-red:#FF8677;
+}
+input,select{
+    background: var(--clr-bg);
+    border-color: var(--clr-border-primary);
+}
+p,label,div,input,select,button{
+    color: var(--clr-font-primary);
+}
+h1,h2,h3,h4,h5,h6{
+    color: var(--clr-font-header);
+}
+button{
+    background: transparent;
+}
 
 .wrapper{
     background: var(--clr-bg);
@@ -81,7 +92,7 @@ a:hover,a:active{
     align-items: center;
     justify-content: center;
     margin:0 auto;
-    border:1px solid black;
+    border:1px solid var(--clr-border-secondary);
     font-size: var(--font-smallest);
     p{
         color:var(--clr-text-second)
@@ -92,7 +103,7 @@ a:hover,a:active{
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid black;
+    border:1px solid var(--clr-border-secondary);
     margin-top:1rem;
     nav{
         display: flex;
@@ -101,24 +112,24 @@ a:hover,a:active{
 }
 
 .main{
-    border:1px solid black;
+    border:1px solid var(--clr-border-secondary);
     height: 90svh;
 }
+/*Workout Style*/
 .Traningpagemain{
     display: grid;
-    grid-template-columns: 45% 45%;
+    grid-template-columns: 1fr 1fr;
     gap:1rem;
-    align-items: start;
+    align-items: center;
     justify-content: start;
-    flex-direction: column;
     margin:1rem;
     .Workoutformgroup{
         grid-column: 1;
-        border: 1px solid black;
+    border:1px solid var(--clr-border-secondary);
     }
     .workout-sum{
         grid-column: 2;
-        border: 1px solid black;
+    border:1px solid var(--clr-border-secondary);
 
     }
 }
@@ -126,13 +137,25 @@ a:hover,a:active{
     display: flex;
     align-items: start;
     justify-content: start;
+    padding:1rem;
+    width: 100%;
     form{
         display: flex;
         flex-direction: column;
         gap:1rem;
     }
 }
-
+.workout-sum{
+    display: flex;
+    flex-direction: column;
+    padding:1rem;
+    gap:1rem;
+}
+.workout-sum-list{
+    li{
+        margin-bottom: .5rem;
+    }
+}
 .Workoutinputgroup{
     display: flex;
     gap: .5rem;
@@ -145,7 +168,7 @@ a:hover,a:active{
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid var(--clr-border);
+    border:1px solid var(--clr-border-secondary);
     border-radius: .6rem;
     
 }
@@ -169,6 +192,60 @@ a:hover,a:active{
     flex-direction: column;
     gap: .5rem;
 }
+
+
+/* Form*/
+.form-error{
+    color: var(----clr-err);
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    select,option, optgroup{
+    padding:.2rem;
+    border-radius: .5rem;
+    border:1px solid var(--clr-border-primary);
+    color: var(--clr-font-primary);
+    background: var(--clr-bg);
+    }
+}
+.form-group-num{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    input{
+        width: 10%;
+        padding:.2rem;
+        border-radius: .5rem;
+        border:1px solid var(--clr-border-primary);
+    }
+}
+.Workoutform{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media(width < 1200px)
 {
     .container{

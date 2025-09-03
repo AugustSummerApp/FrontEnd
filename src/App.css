@@ -21,7 +21,10 @@
     --clr-font-primary:#DFDEDC;
     --clr-font-secondary:#999999;
     --clr-green:#A3DB78;
+    --clr-green-dark:#77a058;
     --clr-red:#FF8677;
+    --clr-red-dark:#FF8677;
+    --clr-white:#ffffff;
     
 
 
@@ -41,7 +44,6 @@
 
     ----clr-err:#ff0f0f;
 }
-
  :root[data-theme="dark"] {
     --clr-primary:#ADADAD;
     --clr-secondary:#F2EDEA;
@@ -53,7 +55,10 @@
     --clr-font-primary:#DFDEDC;
     --clr-font-secondary:#999999;
     --clr-green:#A3DB78;
+    --clr-green-dark:#77a058;
     --clr-red:#FF8677;
+    --clr-red-dark:#FF8677;
+    --clr-white:#ffffff;
 }
 input,select{
     background: var(--clr-bg);
@@ -68,16 +73,24 @@ h1,h2,h3,h4,h5,h6{
 button{
     background: transparent;
 }
-
+.btn-green{
+    background: var(--clr-green);
+    color: var(--clr-white);
+    border: none;
+    border-radius: .5rem;
+    padding:1rem;
+}
+.btn-green:hover{
+    transition: .5s;
+    background: var(--clr-green-dark);
+}
 .wrapper{
     background: var(--clr-bg);
 }
-
 a:hover,a:active{
     color:var(--clr-second);
     transition: .6s;
 }
-
 .container{
     width: 1320px;
     margin:0 auto;
@@ -85,7 +98,6 @@ a:hover,a:active{
     grid-template-rows: auto 1fr auto;
     gap:1rem;
 }
-
 .Footer{
     bottom:2rem;
     display: flex;
@@ -98,7 +110,6 @@ a:hover,a:active{
         color:var(--clr-text-second)
     }
 }
-
 .Header{
     display: flex;
     align-items: center;
@@ -110,7 +121,6 @@ a:hover,a:active{
         gap:1rem;        
         }
 }
-
 .main{
     border:1px solid var(--clr-border-secondary);
     height: 90svh;
@@ -124,13 +134,16 @@ a:hover,a:active{
     justify-content: start;
     margin:1rem;
     .Workoutformgroup{
+        border-radius: .5rem;
+        background-color: var(--clr-bg-secondary);
         grid-column: 1;
-    border:1px solid var(--clr-border-secondary);
+        border:1px solid var(--clr-border-primary);
     }
     .workout-sum{
+        border-radius: .5rem;
+        background-color: var(--clr-bg-secondary);
         grid-column: 2;
-    border:1px solid var(--clr-border-secondary);
-
+        border:1px solid var(--clr-border-primary);
     }
 }
 .Workoutformgroup{
@@ -150,6 +163,7 @@ a:hover,a:active{
     flex-direction: column;
     padding:1rem;
     gap:1rem;
+    height: 100%;
 }
 .workout-sum-list{
     li{
@@ -172,11 +186,9 @@ a:hover,a:active{
     border-radius: .6rem;
     
 }
-
 .weightinput{
     width: 3rem;
 }
-
 .Macros-main{
     margin:1rem;
 }
@@ -186,14 +198,11 @@ a:hover,a:active{
     width: 30%;
     gap:1rem;
 }
-
 .Current-macros-sum{
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
-
-
 /* Form*/
 .form-error{
     color: var(----clr-err);
@@ -224,7 +233,18 @@ a:hover,a:active{
 .Workoutform{
     width: 100%;
 }
-
+.form-input{
+    border-radius: .5rem;
+    border:1px solid var(--clr-border-primary);
+    padding-top:.5rem;
+    padding-bottom:.5rem;
+}
+.form-select{
+    border-radius: .5rem;
+    border:1px solid var(--clr-border-primary);
+    padding-top:.5rem;
+    padding-bottom:.5rem;
+}
 
 
 

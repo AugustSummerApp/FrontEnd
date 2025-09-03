@@ -20,3 +20,25 @@ export async function createWorkout(data: WorkoutCreate): Promise<Workout> {
   if (!res.ok) throw new Error('could not create workout');
   return res.json();
 }
+
+export type WorkoutDaySummaryDto = {
+  date: string;     
+  prevDate: string;
+  nextDate: string;
+  totalWorkouts: number;
+  workouts: Workout[];
+};
+
+export async function fetchWorkoutSummary(dateIso: string): Promise<WorkoutDaySummaryDto> {
+  const url = `${API_BASE}/workouts/summary?date=${encodeURIComponent(dateIso)}`;
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+
+  // if any errors are comming. 
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`HTTP ${res.status} ${res.statusText} @ ${url}\n${body.slice(0,200)}`);
+  }
+
+  return res.json();
+}
+

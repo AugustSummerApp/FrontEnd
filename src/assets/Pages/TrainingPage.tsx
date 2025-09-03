@@ -1,13 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { EXERCISE_CATEGORIES, EQUIPMENT  } from "../../reference";
 import type { ChangeEvent, FormEvent, FC} from 'react';
-import type { Workout } from "../../types";
-import { fetchWorkouts, createWorkout } from "../../api/workouts";
+import { createWorkout } from "../../api/workouts";
+import WorkoutSummary from "../Components/Partials/WorkoutSummary";
 
 const TrainingPage: FC = () => {
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
+
+  const todayIso = new Date().toISOString().slice(0,10);
+  const [summaryKey, setSummaryKey] = useState(0);
+  const [summaryDate, setSummaryDate] = useState(todayIso)
+
+
+
   const [form, setForm] = useState({
-    date:'',
+    date: todayIso,
     name:'',
     exerciseType:'',
     sets:'',
@@ -16,20 +22,6 @@ const TrainingPage: FC = () => {
     weight:'',
   });
   const [error,setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadWorkouts();
-  }, []);
-
-  const loadWorkouts = async () => {
-    try {
-      const data = await fetchWorkouts();
-      setWorkouts(data);
-    } catch (err) {
-      console.error(err);
-       setError("Could not get workouts");
-    }
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
@@ -67,9 +59,12 @@ const TrainingPage: FC = () => {
 
   try {
     await createWorkout(payload);
+    setSummaryKey((k) => k + 1);
+    setSummaryDate(payload.date); 
+
     // Resets form
     setForm({
-      date: new Date().toISOString().slice(0, 10),
+      date: todayIso,
       name: '',
       exerciseType: '',
       sets: '',
@@ -78,11 +73,11 @@ const TrainingPage: FC = () => {
       weight: '',
     });
     setError(null);
-    await loadWorkouts();
-  } catch (err) {
-    console.error(err);
-    setError("Could not logg workout, something went wrong")
-  }
+    } catch (err) {
+      console.error(err);
+      setError("Could not logg workout, something went wrong")
+    }
+
   };
 
   return (
@@ -93,6 +88,7 @@ const TrainingPage: FC = () => {
           <div className="form-group">
             <label htmlFor="date">Datum</label>
             <input
+              className="form-input"
               id="date"
               type="date"
               name="date"
@@ -105,6 +101,7 @@ const TrainingPage: FC = () => {
           <div className="form-group">
             <label htmlFor="name">Session Name</label>
             <input
+              className="form-input"
               id="name"
               type="text"
               name="name"
@@ -118,6 +115,7 @@ const TrainingPage: FC = () => {
           <div className="form-group">
             <label htmlFor="exerciseType">Exercise Type</label>
             <select
+              className="form-select"
               id="exerciseType"
               name="exerciseType"
               value={form.exerciseType}
@@ -140,6 +138,7 @@ const TrainingPage: FC = () => {
           <div className="form-group-num">
             <label htmlFor="sets">Sets</label>
             <input
+              className="form-input"
               id="sets"
               type="number"
               name="sets"
@@ -156,6 +155,7 @@ const TrainingPage: FC = () => {
           <div className="form-group-num">
             <label htmlFor="reps">Reps</label>
             <input
+              className="form-input"
               id="reps"
               type="number"
               name="reps"
@@ -172,6 +172,7 @@ const TrainingPage: FC = () => {
           <div className="form-group">
             <label htmlFor="equipment">Equipment</label>
             <select
+              className="form-select"
               id="equipment"
               name="equipment"
               value={form.equipment}
@@ -187,9 +188,10 @@ const TrainingPage: FC = () => {
             </select>
           </div>
 
-          <div className="form-group">
+          <div className="form-group-num">
             <label htmlFor="weight">Weight (kg)</label>
             <input
+              className="form-input"
               id="weight"
               type="number"
               name="weight"
@@ -202,7 +204,7 @@ const TrainingPage: FC = () => {
             />
           </div>
 
-          <button type="submit">Logg Session!</button>
+          <button className="btn-green" type="submit">Logg Session!</button>
           
           {error && (
             <p className="form-error">
@@ -212,17 +214,9 @@ const TrainingPage: FC = () => {
 
         </form>
       </div>
-      <div className="workout-sum">
-        <h1>Here is a summary of your workouts </h1>
-        <ul className="workout-sum-list">
-          {workouts.map(w => (
-            <li key={w.id}>
-              {new Date(w.date).toLocaleDateString()} – {w.name} – {w.exerciseType}:
-              {w.sets}×{w.reps} @ {w.weight}kg ({w.equipment})
-            </li>
-          ))}
-        </ul>
-      </div>
+          <WorkoutSummary
+          key={summaryKey}
+          initialDate={summaryDate}/>
     </div>
   )
 }
